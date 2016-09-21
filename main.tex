@@ -1,0 +1,19 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass{Zousiyu}
+
+\begin{document}
+	\include{body/titlepage}	%封面
+%	{\pagestyle{empty}\mbox{}\newpage\pagestyle{empty}}%产生一个真正的空白页
+	\frontmatter				%序
+	\pagenumbering{Roman}		%目录，摘要等前文区页码设置为大写罗马字体
+	\tableofcontents			%产生目录
+%	{\pagestyle{empty}\mbox{}\newpage\pagestyle{empty}}
+	\mainmatter					%文
+	\input{body/draw}
+	\input{body/page}
+	\input{body/figureandtable}
+	\input{body/tools}
+	\backmatter					%跋
+%	\include{reference}
+%	\printbibliography[title=参考文献]
+\end{document}
