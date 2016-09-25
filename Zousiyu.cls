@@ -1,13 +1,13 @@
 % !Mode:: "TeX:UTF-8"
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{Zousiyu}
-\LoadClass[a4paper,UTF8,space,openany,oneside]{ctexbook}%中英文之间空格，chapter任意页码开始，book文档类型，可加oneside参数去掉编译出来的空白页
+\LoadClass[a4paper,UTF8,space,openany,oneside,fntef]{ctexbook}%中英文之间空格，chapter任意页码开始，book文档类型，可加oneside参数去掉编译出来的空白页，fntef调用下画线宏包
 
 %========================宏包和相关设置===============================
-
+\usepackage{endnotes}%尾注宏包
 \usepackage{fontspec}%字体选择宏包
 \usepackage{etoolbox}%用于更改chapter定义
-%\usepackage{ctexcap}
+
 %========================一些表格宏包================================
 \usepackage{array}			%一个表格宏包
 \usepackage{colortbl}		%彩色表格宏包
@@ -21,6 +21,7 @@
 
 \usepackage{amsmath,amssymb,amsfonts,latexsym,textcomp,mathrsfs,euscript,yhmath}%与默认字体不冲突的一些符号包
 
+\usepackage{texnames,metalogo}%TeX家族标识符宏包
 
 \usepackage{titletoc}		%目录格式修改宏包
 \usepackage{titlesec}		%标题样式宏包
@@ -28,9 +29,8 @@
 
 \usepackage{listings}		%代码展示宏包
 \usepackage{pgfplots}		%数学绘图宏包
-
-
-%\usepackage[colorlinks=ture,linkcolor=blue,urlcolor=blue,citecolor=black]{hyperref}
+%\usepackage{enumerate}		%排序列表宏包
+\usepackage{paralist}		%多功能列表宏包
 
 % 令 \cleardoublepage 的偶数页页眉页脚为空
 %\renewcommand{\cleardoublepage}
@@ -45,10 +45,6 @@
 \graphicspath{{fig/}}%图片路径
 %% 如果插入的图片没有指定扩展名，那么依次搜索下面的扩展名所对应的文件
 \DeclareGraphicsExtensions{.pdf,.eps,.png,.jpg,.jpeg,.bmp}
-
-\usepackage[hyperref=true,backend=biber,sorting=none,backref=true]{biblatex}
-
-\bibliography{Zousiyu}
 
 %===========================页眉页脚=================================
 \usepackage{fancyhdr}			%宏包
@@ -128,8 +124,8 @@
 
 %===========================图表标题样式============================
 \DeclareCaptionFont{heiti}{\heiti}
-\captionsetup[figure]{labelsep=space,justification=centering,font=heiti,aboveskip=2mm,belowskip=2mm}%空格分隔符，居中，黑体
-\captionsetup[table]{labelsep=space,justification=centering,font=heiti,aboveskip=2mm,belowskip=2mm}%空格分隔符，居中，黑体
+\captionsetup[figure]{labelsep=space,justification=centering,font=heiti,aboveskip=1mm,belowskip=1mm}%空格分隔符，居中，黑体
+\captionsetup[table]{labelsep=space,justification=centering,font=heiti,aboveskip=1mm,belowskip=1mm}%空格分隔符，居中，黑体
 
 %在浮动体环境外使用图标标题
 %\makeatletter
@@ -172,7 +168,7 @@
 	showstringspaces=false,
 	%高亮与样式设置
 	numberstyle=\zihao{6}\daima,
-	basicstyle=\zihao{6}\daima,		%\footnotesize\ttfamily
+	basicstyle=\zihao{6}\ttfamily,		%\footnotesize\ttfamily
 	backgroundcolor=\color{backcolor},			%背景色
 	commentstyle=\color{comment},
 	keywordstyle=\color{keyword},
@@ -261,7 +257,23 @@
 	\par\addvspace{1em}}
 \makeatother
 
-
 %====================最后放置链接宏包，避免冲突===============================
-%\usepackage[colorlinks,bookmarksopen=true,bookmarksnumbered=true]{hyperref}
-\usepackage[CJKbookmarks,colorlinks=true,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=magenta,anchorcolor=magenta,citecolor=magenta]{hyperref}
+\usepackage[colorlinks,bookmarksopen=true,bookmarksnumbered=true]{hyperref}
+
+%======================新定义，使引用变为图1-1，式（3-2）这样的形式==========================
+%\def\equationautorefname{式}%
+\renewcommand{\eqref}[1]{式(\ref{#1})}
+\def\footnoteautorefname{脚注}%
+\def\itemautorefname{项}%
+\def\figureautorefname{图}%
+\def\tableautorefname{表}%
+\def\partautorefname{篇}%
+\def\appendixautorefname{附录}%
+\def\chapterautorefname{章}%
+\def\sectionautorefname{节}%
+\def\subsectionautorefname{小小节}%
+\def\subsubsectionautorefname{subsubsection}%
+\def\paragraphautorefname{段落}%
+\def\subparagraphautorefname{子段落}%
+\def\FancyVerbLineautorefname{行}%
+\def\theoremautorefname{定理}%
