@@ -1,0 +1,192 @@
+\newpage
+{\let\clearpage\relax \chapter{正文工具}}
+
+\section{目录}
+
+\section{脚注}
+
+脚注是对正文中词语的补充说明。系统提供的脚注命令如下，序号用于自行设定脚注序号，通常不需要给出。
+
+\begin{latex}{}
+\footnote[number]{text}
+\end{latex}
+
+例如，为本文作者\footnote{邹思宇，男，\LaTeX 爱好者}添加脚注。
+
+如果要在脚注中输入带反斜杠的字符串，可使用等宽字体命令加字符串命令输入\footnote{\texttt{脚注命令\string\footnote}}。代码如下。如果需要更多的设置，可以调用脚注宏包\qd{footmisc}，对脚注命令\latexline{\footnote}进行扩展功能。
+
+\begin{latex}{}
+\footnote{\texttt{\string\footnote}}
+\end{latex}
+
+\section{尾注}
+
+\LaTeX 没有尾注功能，但是可以调用\qd{endnotes}宏包来生成尾注。用下面这段话作为尾注例子。
+
+南北朝时著名数学家祖冲之\endnote{公元429-500}发明了一种计算方法，从而得到了更为准确的圆周率\endnote{圆周长与直径之比}值。
+\renewcommand{\notesname}{\large 本章注释}
+\theendnotes
+\setcounter{endnote}{0}
+
+\section{边注}
+
+\LaTeX 本身提供边注命令：
+
+\begin{latex}{}
+\marginpar[左边注]{右边注}
+\end{latex}
+
+边注测试\marginpar[这是一个边注]{这是边注啊}。
+
+\section{参考文献}
+
+\section{链接}
+这部分内容主要用\qd{hyperref}宏包来实现。
+
+\section{引用功能}
+我们可以使用命令引用一个表格、公式、图片等。如使用如下命令分别引用一张表和一个带编号的公式。引用结果：如\autoref{tools-example}和\autoref{tools-tabular}所示。
+
+\begin{latex}{}
+\ref{tools-example}
+\ref{tools-tabular}
+\end{latex}
+
+\begin{equation}\label{tools-example}
+\int arccscx\,dx=xarccscx+ln(x+\sqrt{x^2-1}+C)
+\end{equation}
+
+
+\begin{table}[!ht]
+\begin{center}
+	\caption{\TeX 家族标识符}
+	\begin{tabular}{|C{10mm}|C{10mm}|}
+		\hline
+		\multicolumn{2}{|c|}{\TeX 家族标识符}\\
+		\hline
+		\LaTeX & \LaTeXe\\
+		\hline
+		\TeX & \XeLaTeX\\
+		\hline
+	\end{tabular}
+\end{center}
+\end{table}
+
+\section{列表}
+\subsection{常规列表}
+常规列表环境。
+
+\begin{codeshow}
+\begin{itemize}
+	\item[记号] 条目1
+	\item[-] description1
+	\item[*] description2
+\end{itemize}
+\end{codeshow}
+
+常规列表的条目之间间距较大，可以使用长度赋值命令将条目环境额外的垂直空白设置为0pt，达到与正文间距一致。
+
+\begin{latex}{}
+\itemsep=0pt
+\parskip=0pt
+\end{latex}
+
+\subsection{排序列表}
+排序列表的基本形式。
+
+\begin{codeshow}
+	\begin{enumerate}
+		\item 条目1
+		\item 条目2
+		\item 条目3
+	\end{enumerate}
+\end{codeshow}
+
+排序列表可以嵌套，各层条目序号不一，我们可对其序号、标号和前缀进行重新定义，以生成所需要的条目样式。但是重新定义命令使用起来麻烦，排序列表默认命令也复杂，不便记忆，更不便于重定义。
+
+为了方便，我们直接使用\qd{paralist}宏包，我们只需要将标号样式填入方括号中，即可对标号进行重定义。此法在后面说明。
+
+\subsection{解说列表}
+示例如下，该类型列表用于对专业术语进行解释。具体设置不做详细说明，因为使用不便，后面有更好的宏包可以对以上所提到的三类列表进行更简便地进行设置。
+
+\begin{codeshow}
+	\begin{description}
+		\item[APLL] 
+		Automatic Phase-Locked Loop 自动锁相环
+		\item[GPS] Global 
+		Positioning System 全球定位系统
+		\item[SPACETRACK] 
+		Space Tracking 空间跟踪
+	\end{description}
+\end{codeshow}
+
+\subsection{列表宏包paralist}
+使用该宏包生成列表，条目与条目之间默认没有额外间距，不需要额外调整。此外，该宏包还提供行内列表，类似于行内公式，非常方便。
+
+\subsubsection{三种常规列表}
+\qd{paralist}提供\qd{compactitem,asparaitem,inparaitem}三种常规列表环境。前两种无额外行距，\qd{compactitem}的列表换行也缩进，\qd{asparaitem}换行后无缩进。其中\qd{compactitem}环境可用命令\latexline{\pltopsep=12pt}来附加上下额外行距。
+
+在此，我们只看行内列表\qd{inparaitem}一个例子。
+
+\begin{codeshow}
+	对于碰撞的物理定义已有许多种，例如：
+	\begin{inparaitem}[\S]
+		\item 一种以脉冲力相互作用的过程。
+		\item 两个质点交换它们动量和能量的持续过程。
+	\end{inparaitem}
+	我们倾向于第二种说法。
+\end{codeshow}
+
+\subsubsection{三种排序列表}
+该宏包同样提高三种排序列表环境，\qd{compactenum,asparaenum,inparaenum}。\qd{compactenum}无首行缩进但有换行缩进，\qd{asparaenum}有首行缩进但换行不缩进。
+
+\begin{codeshow}
+	对于碰撞的物理定义已有许多种，例如：
+	\begin{compactenum}[(1)]
+		\item 一种以脉冲力相互作用的过程。
+		\item 两个质点交换它们动量和能量的持续过程。
+	\end{compactenum}
+	我们倾向于第二种说法。
+\end{codeshow}
+
+\begin{codeshow}
+	对于碰撞的物理定义已有许多种，例如：
+	\begin{asparaenum}[(1)]
+		\item 一种以脉冲力相互作用的过程。
+		\item 两个质点交换它们动量和能量的持续过程。
+	\end{asparaenum}
+	我们倾向于第二种说法。
+\end{codeshow}
+
+宏包提供了一个参数位置，可填入序号和命令来控制排序列表样式。数字必须是\qd{A,a,I,i,1}这几种，否则无法自动排序。如有字符串需要正常输出，可用花括号括起来，如\latexline{[{例} 1]}。
+
+\begin{codeshow}
+	对于碰撞的物理定义已有许多种，例如：
+	\begin{compactenum}[{定义} \itshape (1)]
+		\item 一种以脉冲力相互作用的过程。
+		\item 两个质点交换它们动量和能量的持续过程。
+	\end{compactenum}
+	我们倾向于第二种说法。
+\end{codeshow}
+
+\subsubsection{三种解说列表环境}
+提供\qd{compactdesc,asparadesc,inparadesc}三种解说列表环境，差异见\LaTeXe 完全学习手册列表宏包paralist一节。
+
+\subsubsection{其他特点}
+\begin{asparaenum}[(1)]
+	\item 调用\latexline{paralist}宏包后，系统自带的列表环境也可以使用可选参数来修改条目标志和样式。
+	\item 支持交叉引用。
+	\item 常规列表和排序列表可以相互嵌套。
+\end{asparaenum}
+
+\begin{codeshow}
+	调用\latexline{paralist}宏包后，系统自带的列表环境的标记更改示例。
+	\begin{enumerate}[(1)]
+		\itemsep=0pt
+		\parskip=0pt
+		\item 条目1
+		\item 条目2
+		\item 条目3
+		\end{enumerate}
+\end{codeshow}
+
+\section{附录}

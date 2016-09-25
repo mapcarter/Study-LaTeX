@@ -1,0 +1,160 @@
+\newpage
+
+{\let\clearpage\relax \chapter{版面和格式}}
+
+\section{页眉页脚}
+一般来说，设置页眉页脚需要调用使用比较广泛的$ fancyhdr $宏包。我习惯使用如下代码先清空默认定义，然后自己重新定义。页眉页脚线的粗细也可以重新定义。
+
+\begin{latex}{}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}					%清空当前设置
+	%单页文档
+	\lhead{}				%l，r，c，左中右
+	\cfoot{}
+	%双页文档
+	\fancyhead[RO,LE]{}		%E，O，左、右页
+	\fancyfoot[LE,RO]{\thepage}
+\renewcommand{\headrulewidth}{0.4 pt}
+\renewcommand{\footrulewidth}{0.4 pt}
+\end{latex}
+
+
+我们可以将章节标题和序号插入到页眉或者页脚中去，其格式与正文中章节标题的定义一样。如果需要更改，要重新定义。例如，可以使用如下代码重新定义页眉内的章标题样式，用在在本书中，这将会使页眉的“第X章 版式”更改为“X 版式”。 
+
+具体更改页眉页脚区域章节显示样式的代码如下。
+
+\begin{latex}{}
+\renewcommand{\chaptermark}[1]{\markleft{\thesection.\#1}}
+%两种一样，\markleft影响\leftmark，而\makeboth影响两着，需要选一
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{节样式空置表示修改章样式}}
+\renewcommand{\chaptermark}[1]{\markboth{章样式}{节样式}}
+\end{latex}
+
+
+在book文件类别下，$ \backslash leftmark $自动存录各章之章名，$ \backslash rightmark $记录节标题。所以，想要在页眉上显示章节标题是很容易实现的。
+
+
+\begin{latex}{}
+\lhead{\leftmark}			%左页眉显示章
+\rhead{\rightmark}			%右页眉显示节
+\end{latex}
+
+
+\section{代码展示}
+我们需要使用一个宏包——$ lstlisting $来达到这个目的。记住，不要再$ lstlisting $环境的第一行代码前面使用Tab或者空格，因为会无条件还原，导致代码不能贴合框线，丑陋。
+
+MATLAB代码高亮测试
+
+
+\begin{lstlisting}[language=Matlab]
+t=0:pi/10:2*pi;
+[X,Y,Z]=cylinder(4*cos(t));
+subplot(1,2,1);mesh(X);title('X');
+subplot(1,2,2);mesh(Y);title('Y');
+\end{lstlisting}
+
+
+\section{字体设置}
+
+分全局和局部字体设置。
+\subsection{全局字体设置}
+中文的文档都要调用ctex宏包，该宏包提供一个简单的参数可以设置全部正文的字体。
+
+\begin{latex}{}
+\setmainfont{Times New Roman}	%仅对西文起作用
+\setCJKmainfont{SimSun}			%仅对中文起作用
+\end{latex}
+
+\subsection{局部字体设置}
+
+\begin{latex}{}
+\newfontfamily\daima{Consolas}	%使用\daima直接调用
+\end{latex}
+
+\subsection{在数学环境中使用中文}
+默认情况下，数学环境中是不允许输入汉字的。当我们需要输入汉字作为变量的标识时，可以使用\latexline{\text{要输入的汉字字符}}来完成这项工作。
+
+\begin{codeshow}
+$f_{\text{高温}}$
+\end{codeshow}
+
+\subsection{汉字“斜体”}
+汉字没有加斜体。平常我们看到的加斜汉字，通常是几何变换得到的结果，非常的粗糙，并不严格满足排版要求；而真正的字形是需要精细的设计的。同时，汉字字体里面也很少有加粗体的设计。但是，有时候却又有所谓的“斜体”需求。\LaTeX 也是可以实现这种伪斜体的。
+
+\begin{center}
+	{\CJKfontspec[FakeSlant=0.4]{SimSun}\zihao{1}汉字伪斜体}
+\end{center}
+
+\begin{latex}{}
+{\CJKfontspec[FakeSlant=0.4]{SimSun}\zihao{1}汉字伪斜体}
+\end{latex}
+
+西文一般设有加斜，但是这与“斜体”并不是同一回事。加斜是指某种字族的Italy 字系；而斜体，是指Slant 字族。所以$ textit{} $是加斜字体，而$ textsl{} $或者$ slshape $才是真正的斜体。
+
+\begin{center}
+	{\zihao{1} \textit{Italy Slant} ~ \textsl{Italy Slant}}
+\end{center}
+
+\section{颜色}
+一般来说，我们调用下xcolor这个宏包。如果对内置的颜色了解，或者现有RGB颜色值，一般使用如下代码直接调用颜色。
+
+\begin{center}
+	\color[RGB]{204, 128, 92}{Color Text中文测试}
+\end{center}
+
+\begin{latex}{}
+\color[RGB]{204, 128, 92}{Color Text中文测试}
+\end{latex}
+
+但是每次调用颜色都写颜色代码似乎不方便，我们可以先定义，基本定义形式如下。
+\begin{latex}{}
+\usepackage{xcolor}									%颜色宏包
+\definecolor{backcolor}{RGB}{242,242,242}			%背景色
+\definecolor{comment}{RGB}{0,128,0}					%注释
+\definecolor{keyword}{RGB}{0,0,255}					%关键词
+\definecolor{name名字随意}{model色值类型}{color-spec色值范围}
+\end{latex}
+
+然后，我们就可以直接调用我们定义的颜色名称来设定颜色了。
+
+\begin{center}
+	\color{keyword}{\slshape function, return, if, true, false}
+\end{center}
+
+\begin{latex}{}
+\color{keyword}{\slshape function, return, if, true, false}
+\end{latex}
+
+\section{文本格式}
+
+\subsection{下画线}
+
+\LaTeX 自身提供的下划线之类的命令并不好用，我们使用\qd{ulem}或者\qd{CJKfntef}宏包来代替。对于中文排版，在\qd{ctex}宏包的调用命令中添加\qd{fntef}选项即可调用\qd{CJKfntef}宏包来画线，\qd{CJKfntef}宏包的优点是其画线命令中的中文能自动中断正确换行。本书以\qd{CJKfntef}宏包为例。
+
+\begin{codeshow}
+\CJKunderdot{important 非常重要}\\
+\CJKunderline{notice 注意}\\
+\CJKunderdblline{urgent 必须}\\
+\CJKunderwave{prompt 提示}\\
+\CJKsout{wrong 错误}\\
+\CJKxout{removed 删除}
+\end{codeshow}
+
+对于前四种下划线，该宏包还提供了调节下划线与文本之间距离的参数。默认值都是0.2em，需要使用重新定义命令来使参数生效。
+
+\begin{latex}{}
+\CJKunderdotbasesep
+\CJKunderlinebasesep
+\CJKunderdbllinebasesep
+\CJKunderwavebasesep
+\renewcommand{\CJKunderlinebasesep}{0.5em}
+\end{latex}
+
+同时，还提供了6条颜色命令。大致命令形式和调用方法如下所示，其中\qd{color}命令有多种调用模式，详见本书颜色部分。
+
+\begin{latex}{}
+\CJKunderlinecolor
+\renewcommand{\CJKunderline}{\color{blue}}
+\end{latex}
+
