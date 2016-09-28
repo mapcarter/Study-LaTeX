@@ -2,6 +2,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{Zousiyu}
 \LoadClass[a4paper,UTF8,space,openany,oneside,fntef]{ctexbook}%中英文之间空格，chapter任意页码开始，book文档类型，可加oneside参数去掉编译出来的空白页，fntef调用下画线宏包
+\usepackage[svgnames,table]{xcolor}
 
 %========================宏包和相关设置===============================
 \usepackage{endnotes}%尾注宏包
@@ -9,11 +10,12 @@
 \usepackage{etoolbox}%用于更改chapter定义
 
 %========================一些表格宏包================================
+
 \usepackage{array}			%一个表格宏包
+\usepackage{diagbox}		%对角线宏包，刘海洋
 \usepackage{colortbl}		%彩色表格宏包
 \usepackage{booktabs}		%表格线宏包
 \usepackage{multirow}		%跨行
-\usepackage{diagbox}		%对角线宏包，刘海洋
 
 \usepackage[top=2.7truecm,bottom=2.2truecm,left=3truecm,right=3truecm,includefoot,xetex]{geometry}
 \usepackage[version=4]{mhchem}			%化学式宏包
@@ -29,8 +31,9 @@
 
 \usepackage{listings}		%代码展示宏包
 \usepackage{pgfplots}		%数学绘图宏包
-%\usepackage{enumerate}		%排序列表宏包
 \usepackage{paralist}		%多功能列表宏包
+
+\usepackage{tikz}
 
 % 令 \cleardoublepage 的偶数页页眉页脚为空
 %\renewcommand{\cleardoublepage}
@@ -40,6 +43,24 @@
 %===========================字体设置=================================
 \setmainfont{Times New Roman}%仅对西文起作用
 \setCJKmainfont{SimSun}%仅对中文起作用
+
+%======================新定义，使引用变为图1-1，式（3-2）这样的形式==========================
+%\def\equationautorefname{式}%
+\renewcommand{\eqref}[1]{式(\ref{#1})}
+\def\footnoteautorefname{脚注}%
+\def\itemautorefname{项}%
+\def\figureautorefname{图}%
+\def\tableautorefname{表}%
+\def\partautorefname{篇}%
+\def\appendixautorefname{附录}%
+\def\chapterautorefname{章}%
+\def\sectionautorefname{节}%
+\def\subsectionautorefname{小小节}%
+\def\subsubsectionautorefname{subsubsection}%
+\def\paragraphautorefname{段落}%
+\def\subparagraphautorefname{子段落}%
+\def\FancyVerbLineautorefname{行}%
+\def\theoremautorefname{定理}%
 
 %===========================图片设置=================================
 \graphicspath{{fig/}}%图片路径
@@ -139,7 +160,6 @@
 \newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}m{#1}}
 \newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}m{#1}}
 
-\usepackage{xcolor}					%代码高亮
 \usepackage{color}					%[usenames,dvipsnames]
 
 %============================代码环境===============================
@@ -192,44 +212,7 @@
 \lstnewenvironment{latex}[1]{\lstset{#1}}{}
 \newcommand{\latexline}[1]{{\lstinline[language=TeX,basicstyle=\small\ttfamily]{#1}}}
 
-
-\newcommand{\qd}[1]{{\bfseries\slshape{#1}}}	% 强调，粗斜体
-
-%%==============================MATLAB代码高亮=====================================
-%\definecolor{DarkGreen}{rgb}{0.0,0.4,0.0}
-%%%\lstloadlanguages{Matlab}
-%\lstset{
-%	language=Matlab,
-%	frame=shadowbox,				%single
-%	numbers=left,
-%	numbersep=5pt,					%行号与代码距离
-%	breaklines=true,				%自动换行
-%	xleftmargin=5em,				%左边距
-%	xrightmargin=5em,
-%	aboveskip=1em,
-%	tabsize=4,						%设置tab空格数
-%	extendedchars=false,			%解决代码跨页时，章节标题，页眉等汉字不显示的问题
-%	showspaces=false,				%不显示空格
-%	showstringspaces=false,
-%	%高亮与样式设置
-%	numberstyle=\zihao{6}\daima,
-%	basicstyle=\zihao{6}\daima,		%\footnotesize\ttfamily
-%	basicstyle=\zihao{6}\daima,
-%	keywordstyle=[1]\color[RGB]{0,0,255}\slshape,  % primitive funs in bold blue
-%	keywordstyle=[2]\color[RGB]{128,128,128},         % args of funs in purple
-%	keywordstyle=[3]\color[RGB]{0,0,255}\underbar,  % user funs in blue with underbar
-%	stringstyle=\color[RGB]{138,68,136},             % strings in purple
-%	identifierstyle=,
-%	commentstyle=\usefont{T1}{pcr}{m}{sl}\color{DarkGreen}\small,
-%	% more standard MATLAB funcs
-%%	morekeywords={sawtooth, square},
-%	% args of funcs
-%%	morekeywords=[2]{on, off, interp},
-%%	morecomment=[l][\color[RGB]{0,0,255}]{...},     % line continuation (...) like blue comment
-%%	numberstyle=\tiny\color[RGB]{0,0,255},
-%%	firstnumber=1,
-%%	stepnumber=1
-%	}
+\newcommand{\qd}[1]{{\slshape{#1}}}	% 强调，斜体
 
 %===============构建一个左边显示代码，右边显示编译结果的代码展示环境====================
 \usepackage{verbatim}
@@ -258,22 +241,19 @@
 \makeatother
 
 %====================最后放置链接宏包，避免冲突===============================
-\usepackage[colorlinks,bookmarksopen=true,bookmarksnumbered=true]{hyperref}
-
-%======================新定义，使引用变为图1-1，式（3-2）这样的形式==========================
-%\def\equationautorefname{式}%
-\renewcommand{\eqref}[1]{式(\ref{#1})}
-\def\footnoteautorefname{脚注}%
-\def\itemautorefname{项}%
-\def\figureautorefname{图}%
-\def\tableautorefname{表}%
-\def\partautorefname{篇}%
-\def\appendixautorefname{附录}%
-\def\chapterautorefname{章}%
-\def\sectionautorefname{节}%
-\def\subsectionautorefname{小小节}%
-\def\subsubsectionautorefname{subsubsection}%
-\def\paragraphautorefname{段落}%
-\def\subparagraphautorefname{子段落}%
-\def\FancyVerbLineautorefname{行}%
-\def\theoremautorefname{定理}%
+\usepackage{hyperref}
+\hypersetup{
+	bookmarksopen=true,							%显示书签
+	bookmarksnumbered=true,						%显示书签编号
+	unicode=true,								%使书签支持unicode字符
+	colorlinks=true,							%加颜色区分链接
+	linkcolor=blue,
+	anchorcolor=blue,
+	citecolor=green,
+	pdftitle={邹思宇的\LaTeXe 学习笔记},
+	pdfauthor={邹思宇},
+%	pdfsubject={},
+	pdfkeywords={LaTeX,PGFplot,Tikz,邹思宇},
+	pdfproducer={XeLaTeX},
+%	pdfcreator={}
+}
