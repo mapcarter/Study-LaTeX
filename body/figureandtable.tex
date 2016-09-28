@@ -200,6 +200,62 @@
 	\end{tabular}
 \end{codeshow}
 
+一个复杂的彩色表格例子，代码留着以后仔细看，彩色表格应该用的不多。
+
+\begin{latex}{}
+%使用array宏包的特性来定义几个表格属性，只适用于本环境
+\newcommand*{\arraycolor}[1]{\protect\leavevmode\color{#1}}
+\newcolumntype{A}{>{\columncolor{blue!50!white}}c}
+\newcolumntype{B}{>{\columncolor{LightGoldenrod}}c}
+\newcolumntype{C}{>{\columncolor{FireBrick!50}}c}
+\newcolumntype{D}{>{\columncolor{Gray!42}}c}
+\begin{center}
+	\sffamily
+	\arrayrulecolor{white}
+	\arrayrulewidth=1pt
+	\renewcommand{\arraystretch}{1.5}
+	\rowcolors[\hline]{3}{.!50!White}{}
+	\begin{tabular}{A|B|C}
+		\multicolumn{3}{D}{\bfseries Example table}\\
+		\rowcolor{.!50!Black}
+		\arraycolor{White}\bfseries First column &
+		\arraycolor{White}\bfseries Second column&
+		\arraycolor{White}\bfseries Third column\\
+			1 & A & E\\
+			2 & B & F\\
+			3 & C & G\\
+			4 & D & H\\
+	\end{tabular}
+\end{center}
+\end{latex}
+
+%\begin{table}[!ht]
+%	\centering
+%	%使用array宏包的特性来定义几个表格属性，只适用于本环境
+%	\newcommand*{\arraycolor}[1]{\protect\leavevmode\color{#1}}
+%	\newcolumntype{A}{>{\columncolor{blue!50!white}}c}
+%	\newcolumntype{B}{>{\columncolor{LightGoldenrod}}c}
+%	\newcolumntype{C}{>{\columncolor{FireBrick!50}}c}
+%	\newcolumntype{D}{>{\columncolor{Gray!42}}c}
+%		\sffamily
+%		\arrayrulecolor{white}
+%		\arrayrulewidth=1pt
+%		\renewcommand{\arraystretch}{1.5}
+%		\rowcolors[\hline]{3}{.!50!White}{}
+%		\begin{tabular}{A|B|C}
+%			\multicolumn{3}{D}{\bfseries Example table}\\
+%			\rowcolor{.!50!Black}
+%			\arraycolor{White}\bfseries First column &
+%			\arraycolor{White}\bfseries Second column&
+%			\arraycolor{White}\bfseries Third column\\
+%			1 & A & E\\
+%			2 & B & F\\
+%			3 & C & G\\
+%			4 & D & H\\
+%		\end{tabular}
+%\end{table}
+
+
 \subsection{斜线表头}
 
 虽然斜线表头是不符合国标的，但在非正式场合用得还挺多的。制作斜线表头需要\qd{diagbox}宏包，刘海洋写的，中文说明。
@@ -208,10 +264,10 @@
 	\centering
 	\begin{tabular}{|l|ccc|}
 		\hline
-		\diagbox{Time}{Room}{Day} & Mon & Tue & Wed \\
+		\diagbox{Time}{Room}{Day} &Mon&Tue&Wed\\
 		\hline
-		Morning & used & used & \\
-		Afternoon & & used & used \\
+		Morning&used&used&\\
+		Afternoon& &used&used\\
 		\hline
 	\end{tabular}
 \end{codeshow}
@@ -240,7 +296,7 @@
 \end{latex}
 
 \begin{table}[!ht]
-\begin{center}
+\centering
 \caption{一张课表}
 \begin{tabular}{|C{1cm}|C{1cm}|C{1cm}|}
 	\hline
@@ -251,7 +307,6 @@
 	9:30 & 韩语 & 数学\\
 	\hline
 \end{tabular}
-\end{center}
 \end{table}
 
 \begin{figure}[!ht]

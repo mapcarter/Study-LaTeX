@@ -2,7 +2,7 @@
 
 \section{函数图}
 \subsection{二维函数图}
-绘制函数$f(x)=sin(x)$和$g(x)=cos(x)$在定义域$[-2\pi,2\pi]$上的图像。对于函数$f(x)=sin(x)$，我们使用$ red $和$ /tikz/line width={1pt} $来使其更显眼。\LaTeX 默认取点少，我们使用$samples=x$来控制取点数，使函数图像更为平滑。
+绘制函数$f(x)=sin(x)$和$g(x)=cos(x)$在定义域$[-2\pi,2\pi]$上的图像。对于函数$f(x)=sin(x)$，我们使用red和\latexline{/tikz/line width={1pt}}来使其更显眼。\LaTeX 默认取点少，我们使用samples=x来控制取点数，使函数图像更为平滑。
 
 
 \begin{latex}{}
@@ -39,7 +39,7 @@
 
 \subsection{三维函数图}
 绘制函数$f(x,y)=x^2+y^2$的三维函数图像。
-其中参数$colorbar$可以为函数图添加一个彩色条。
+其中参数\qd{colorbar}可以为函数图添加一个彩色条。
 
 
 \begin{latex}{}
@@ -84,7 +84,7 @@
 \subsection{隐函数图像}
 
 \section{线图}
-对于折线图而言，使用$ sharp plot $可以得到折线图，而使用$ smooth $可以得到平滑曲线图。这些命令在$ addplot $的设置里面添加。一些其他基础设置如下所示。
+对于折线图而言，使用sharp plot可以得到折线图，而使用smooth可以得到平滑曲线图。这些命令在addplot的设置里面添加。一些其他基础设置如下所示。
 
 \begin{latex}{}
 \item grid=major		%显示网格线
